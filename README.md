@@ -1,69 +1,41 @@
-# Wearables E-Commerce Project
+# Gearico
+A Wearable Technology E-commerce Site
 
-You will make use of _everything_ that you have learned thus far in the bootcamp to build an e-commerce app that will showcase all of the provided _wearables_ items.
+## Description
+Created by a small, 3 person team, this was a 5-day project as part of the Concordia Web Development bootcamp. We were given a .json file of wearable technology items (names, prices, and thumbnails), and instructions that the MVP had to allow users to browse and purchase those items, updating their stock in the backend via a RESTful server. Everything else was up to us, provided we stuck to the MERN stack and didn't use any extra libraries/dependencies to cut corners.
 
-The stack is React.Js, Node.Js, and styled-components.
+## Homepage:
 
-Your node server should be RESTful and follow REST principles, at least to the extent we learned during the bootcamp.
+![homepage_full](https://user-images.githubusercontent.com/97937045/167347569-1343bcd4-43d5-4091-ad7c-613edbb7ee11.png)
 
----
+The landing page, with the navigation bar fixed on the top. If you scroll down, you see the **Category** links. Clicking on the "Products" link at the top will let you browse _all_ of the items, whereas clicking on a category here will take you to the appropraite item sub-category within the Products page.
 
-**✋ You CANNOT use any external UI libraries, including, but not limited to, Material UI, Bootstrap to style your project!**
+Underneath that, there are a handful of **Featured Products** - ideally items that are overstocked and you want to push.
 
----
+## Products:
 
-## Getting Started
+![categories](https://user-images.githubusercontent.com/97937045/167344690-8d4a35be-cbd0-455f-bfec-b314541a8133.png)
 
-<img src="./server/assets/software-dev-path.jpg" style="width: 100%;" />
+Products are limited to 10 per page, with the pagination being handled in the backend. Clicking on an item here, or from the "Featured Items" section of the homepage, will open the item details in a modal:
 
-You have your assignment and your team. What should you do first? This will vary for every team, and even every team member.
+![product_page](https://user-images.githubusercontent.com/97937045/167347214-495f213e-dae4-4d89-9113-5842b1ff333c.png)
 
-**The important thing is to NOT just jump in and start coding!**
+Listed here is all the information we were given for each product - the name, price, company that produces it and category. All of the item details were imported from the given .json file into our Mongo database, which is where the backend pulls the information from on request. We wanted to add a description, but with close to 400 items that wasn't realistic given our timeline. Users can change the quantity (dependent on the # in stock), and either add it to the cart or click anywhere outside the modal to close the details and return to the product page.
 
-There probably shouldn't be any coding until very near the end of the first day.
+## Shopping Cart:
 
-## Meet your Product Manager!
+![shoppingcart](https://user-images.githubusercontent.com/97937045/167350250-62b6f5a6-c549-49b1-942a-3aff424f2bb1.png)
 
-Each team has been assigned a product manager. This person is in charge of answering questions, guiding you and basically preventing everything from falling apart!
+The shopping cart displays all items added, giving the user the ability to remove items or change their quantities here as well (number of items are reflected in the Cart link in the top right, in the nav bar). Clicking the "Guest Checkout" button will go directly to the checkout page, but if the user is not signed in yet they will see the "Sign In/Create Account" button, giving them that option.
 
-This person should be present for some of your team meetings, but not all. PMs are super busy people and have multiple projects/people to manage. 😉
+## Sign In
 
-## Planning
+![signin](https://user-images.githubusercontent.com/97937045/167347900-943927e9-6c2e-4982-b6cd-0d289328ae4d.png)
 
-1. You will break into groups (with your assigned PM.)
-2. Your PM will answer any initial questions, and give you more information, as required.
-3. Breakout into a separate meeting with just your team. _Your PM will bounce from team to team to make sure you're on track._
-4. Time to use the [Kickoff Meeting Agenda](__documentation/KICKOFF_MEETING_AGENDA.md)
+Signing in/out can be done at any time from the "Sign In" link in the nav bar. Using an email address and a created password, the backend validates this info and utilizes a Mongo database to sign the user in. Now the user can save their address and/or billing info, so they don't have to enter it during the checkout process, as well as see their order history (which is also saved in the database).
 
-### First team meeting
+## Checkout
 
-It could also be a good/fun idea to give yourselves an original team name. :)
+![cart](https://user-images.githubusercontent.com/97937045/167348774-a3f5b3d7-3194-47f6-93dc-e3b94e7f8b6d.png)
 
-Your first team meeting should start with the [Kickoff Meeting Agenda](__documentation/KICKOFF_MEETING_AGENDa.md).
-
-[Successful Software Project Delivery in 10 Steps](https://www.appnovation.com/blog/successful-software-project-delivery-10-steps).
-
-💡 How a project starts is indicative of how it will end.
-
-## Teamwork
-
-The most important aspect of this project is the ability to work in a team. No matter your contribution to the project, you should understand the **FULL** codebase. This will require that you
-
-- **Review** each other's code.
-- **Ask** questions when you don't understand.
-- **Comment** your code extensively. _Always go for clarity over brevity._
-- **Communicate** with your team.
-
-## Updating GitHub
-
-See the [Step by Step Document](https://docs.google.com/document/d/1Txc02kMSnTjyOWFj3HDXc5y5tSurt3AFJGpXZKxvX6A/edit?usp=sharing)
-
-## Project Guidelines
-
-You can see the guidelines [here](./__documentation/PROJECT.md)
-
-## Presentation
-
-Your team will have to present the final product on the final day in order to get a passing grade. Who will draw the short straw?
-
-- The presentation shouldn't be more than 5 mintues long.
+Finally, the checkout page. Since there's a lot of information we need to collect, we divided the fields into two categories - shipping, and billing. Users get cycled through once they've completed all the input in a section (or, once they've confirmed the inputs if they've signed in and saved their info previously). We used a pretty robust set of input validations in the backend, to ensure the addresses are actual street addresses, postal codes are formatted properly, etc. The final component on this page is the "Review" section, where the user sees all their info and has one last chance to cancel out of the order process. This is also when the "Place Order" button becomes active. Clicking that button does a few things: updates the stock numbers and creates a new order entry in the database in the backend, and opens up a modal in the frontend displaying the order confirmation message.
